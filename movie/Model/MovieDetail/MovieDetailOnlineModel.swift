@@ -53,3 +53,43 @@ struct MovieDetailOnlineModel: Codable {
         case voteCount = "vote_count"
     }
 }
+
+extension MovieDetailOnlineModel {
+    func toMovieDetailModel() -> MovieDetailModel {
+        
+        var listGenre: [String] = []
+        
+        for item in self.genres {
+            listGenre.append(item.name)
+        }
+        
+        let genreString = listGenre.joined(separator: ",")
+        return MovieDetailModel(adult: self.adult, 
+                                backdropPath: self.backdropPath,
+                                belongsToCollection: self.belongsToCollection,
+                                budget: self.budget,
+                                genres: genreString,
+                                homepage: self.homepage,
+                                id: self.id,
+                                imdbID: self.imdbID,
+                                originCountry: self.originCountry,
+                                originalLanguage: self.originalLanguage,
+                                originalTitle: self.originalTitle,
+                                overview: self.overview,
+                                popularity: self.popularity,
+                                posterPath: self.posterPath,
+                                productionCompanies: self.productionCompanies,
+                                productionCountries: self.productionCountries,
+                                releaseDate: self.releaseDate,
+                                revenue: self.revenue,
+                                runtime: self.runtime,
+                                spokenLanguages: self.spokenLanguages,
+                                status: self.status,
+                                tagline: self.tagline,
+                                title: self.title,
+                                video: self.video,
+                                voteAverage: self.voteAverage,
+                                voteCount: self.voteCount,
+                                overViewSize: nil)
+    }
+}

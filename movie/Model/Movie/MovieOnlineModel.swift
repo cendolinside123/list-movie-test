@@ -37,3 +37,33 @@ struct MovieOnlineModel: Codable {
         case voteCount = "vote_count"
     }
 }
+
+extension MovieOnlineModel {
+    func toMovieModel() -> MovieModel {
+        
+        var listGenre: [String] = []
+        
+        for item in self.genreIDS {
+            if let getGenre = Constant.listStoredGenre.first(where: {$0.id == item }) {
+                listGenre.append(getGenre.name)
+            }
+        }
+        
+        let genreString = listGenre.joined(separator: ",")
+        
+        return MovieModel(adult: self.adult, 
+                          backdropPath: self.backdropPath,
+                          genreIDS: genreString,
+                          id: self.id,
+                          originalLanguage: self.originalLanguage,
+                          originalTitle: self.originalTitle,
+                          overview: self.overview,
+                          popularity: self.popularity,
+                          posterPath: self.posterPath,
+                          releaseDate: self.releaseDate,
+                          title: self.title,
+                          video: self.video,
+                          voteAverage: self.voteAverage,
+                          voteCount: self.voteCount)
+    }
+}
