@@ -147,11 +147,9 @@ class TitleCollectionViewCell: UICollectionViewCell {
 extension TitleCollectionViewCell {
     
     func setValue(value: MovieDetailModel) {
-        if let urlBackground = value.backdropPath {
-            let urlImg = "https://image.tmdb.org/t/p/original/\(urlBackground)"
-            if let url = URL(string: urlImg) {
-                imgMovie.kf.setImage(with: url)
-            }
+        let urlImg = "https://image.tmdb.org/t/p/original/\(value.backdropPath)"
+        if let url = URL(string: urlImg) {
+            imgMovie.kf.setImage(with: url)
         }
         
         if value.runtime > 0 {
