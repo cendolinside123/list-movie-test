@@ -44,6 +44,9 @@
 		723337512BDE936E006B5BFA /* movieTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 723337502BDE936E006B5BFA /* movieTests.swift */; };
 		723337582BDE93A2006B5BFA /* MovieListTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 723337572BDE93A2006B5BFA /* MovieListTest.swift */; };
 		7233375A2BDE9429006B5BFA /* MovieDetailTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 723337592BDE9429006B5BFA /* MovieDetailTest.swift */; };
+		7233375F2BDE94AF006B5BFA /* ServiceContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7233375C2BDE94AF006B5BFA /* ServiceContainer.swift */; };
+		723337602BDE94AF006B5BFA /* DIConstant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7233375D2BDE94AF006B5BFA /* DIConstant.swift */; };
+		723337612BDE94AF006B5BFA /* DIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7233375E2BDE94AF006B5BFA /* DIService.swift */; };
 		7247F7262BDCBC9800724B15 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7247F7252BDCBC9800724B15 /* AppDelegate.swift */; };
 		7247F72A2BDCBC9800724B15 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7247F7292BDCBC9800724B15 /* ViewController.swift */; };
 		7247F72D2BDCBC9800724B15 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7247F72B2BDCBC9800724B15 /* Main.storyboard */; };
@@ -103,6 +106,9 @@
 		723337502BDE936E006B5BFA /* movieTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = movieTests.swift; sourceTree = "<group>"; };
 		723337572BDE93A2006B5BFA /* MovieListTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieListTest.swift; sourceTree = "<group>"; };
 		723337592BDE9429006B5BFA /* MovieDetailTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailTest.swift; sourceTree = "<group>"; };
+		7233375C2BDE94AF006B5BFA /* ServiceContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceContainer.swift; sourceTree = "<group>"; };
+		7233375D2BDE94AF006B5BFA /* DIConstant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIConstant.swift; sourceTree = "<group>"; };
+		7233375E2BDE94AF006B5BFA /* DIService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIService.swift; sourceTree = "<group>"; };
 		7247F7222BDCBC9700724B15 /* movie.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = movie.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7247F7252BDCBC9800724B15 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7247F7292BDCBC9800724B15 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -336,6 +342,16 @@
 			path = movieTests;
 			sourceTree = "<group>";
 		};
+		7233375B2BDE94AF006B5BFA /* DependencyInjection */ = {
+			isa = PBXGroup;
+			children = (
+				7233375C2BDE94AF006B5BFA /* ServiceContainer.swift */,
+				7233375D2BDE94AF006B5BFA /* DIConstant.swift */,
+				7233375E2BDE94AF006B5BFA /* DIService.swift */,
+			);
+			path = DependencyInjection;
+			sourceTree = "<group>";
+		};
 		7247F7192BDCBC9700724B15 = {
 			isa = PBXGroup;
 			children = (
@@ -407,6 +423,7 @@
 		7247F73E2BDCD33400724B15 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				7233375B2BDE94AF006B5BFA /* DependencyInjection */,
 				7247F73F2BDCD35100724B15 /* UITextField+extensions.swift */,
 				723337252BDE80F6006B5BFA /* ErrorResponse.swift */,
 			);
@@ -580,6 +597,7 @@
 				723337442BDE8FF7006B5BFA /* LanguageUseCaseImpl.swift in Sources */,
 				723337282BDE8528006B5BFA /* ProductionCompanyModel.swift in Sources */,
 				723337102BDE65D0006B5BFA /* LanguageModel.swift in Sources */,
+				723337612BDE94AF006B5BFA /* DIService.swift in Sources */,
 				723337162BDE68EE006B5BFA /* MovieItem.swift in Sources */,
 				7233373F2BDE8C9F006B5BFA /* MovieDetailModel.swift in Sources */,
 				7233372C2BDE8572006B5BFA /* SpokenLanguageModel.swift in Sources */,
@@ -591,6 +609,7 @@
 				7247F7402BDCD35100724B15 /* UITextField+extensions.swift in Sources */,
 				723337242BDE7B88006B5BFA /* MovieUseCaseImpl.swift in Sources */,
 				723336FE2BDE1783006B5BFA /* DescCollectionViewCell.swift in Sources */,
+				723337602BDE94AF006B5BFA /* DIConstant.swift in Sources */,
 				7247F7262BDCBC9800724B15 /* AppDelegate.swift in Sources */,
 				723336F62BDDD876006B5BFA /* MovieCollectionViewCell.swift in Sources */,
 				7233372A2BDE8548006B5BFA /* ProductionCountryModel.swift in Sources */,
@@ -602,6 +621,7 @@
 				723337382BDE895C006B5BFA /* CastUseCaseImpl.swift in Sources */,
 				723337422BDE8FF0006B5BFA /* LanguageUseCase.swift in Sources */,
 				7247F73D2BDCCDC500724B15 /* SearchBar.swift in Sources */,
+				7233375F2BDE94AF006B5BFA /* ServiceContainer.swift in Sources */,
 				723336F32BDD794D006B5BFA /* BaseViewController.swift in Sources */,
 				723337222BDE7B7E006B5BFA /* MovieUseCase.swift in Sources */,
 				7233370B2BDE6521006B5BFA /* GenreResponse.swift in Sources */,
