@@ -30,7 +30,7 @@ class DummyMovielistVM<T>: MovieListViewModel {
     typealias MovieData = T
     var listMovie: T?
     
-    var delegate: MovieListDelegate?
+    weak var delegate: MovieListDelegate?
     
     func firstInitials() {
         
