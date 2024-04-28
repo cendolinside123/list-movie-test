@@ -47,6 +47,7 @@
 		7233375F2BDE94AF006B5BFA /* ServiceContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7233375C2BDE94AF006B5BFA /* ServiceContainer.swift */; };
 		723337602BDE94AF006B5BFA /* DIConstant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7233375D2BDE94AF006B5BFA /* DIConstant.swift */; };
 		723337612BDE94AF006B5BFA /* DIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7233375E2BDE94AF006B5BFA /* DIService.swift */; };
+		723337632BDE9515006B5BFA /* UIViewController+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 723337622BDE9515006B5BFA /* UIViewController+extensions.swift */; };
 		7247F7262BDCBC9800724B15 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7247F7252BDCBC9800724B15 /* AppDelegate.swift */; };
 		7247F72A2BDCBC9800724B15 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7247F7292BDCBC9800724B15 /* ViewController.swift */; };
 		7247F72D2BDCBC9800724B15 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7247F72B2BDCBC9800724B15 /* Main.storyboard */; };
@@ -109,6 +110,7 @@
 		7233375C2BDE94AF006B5BFA /* ServiceContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceContainer.swift; sourceTree = "<group>"; };
 		7233375D2BDE94AF006B5BFA /* DIConstant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIConstant.swift; sourceTree = "<group>"; };
 		7233375E2BDE94AF006B5BFA /* DIService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIService.swift; sourceTree = "<group>"; };
+		723337622BDE9515006B5BFA /* UIViewController+extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+extensions.swift"; sourceTree = "<group>"; };
 		7247F7222BDCBC9700724B15 /* movie.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = movie.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7247F7252BDCBC9800724B15 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7247F7292BDCBC9800724B15 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -423,6 +425,7 @@
 		7247F73E2BDCD33400724B15 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				723337622BDE9515006B5BFA /* UIViewController+extensions.swift */,
 				7233375B2BDE94AF006B5BFA /* DependencyInjection */,
 				7247F73F2BDCD35100724B15 /* UITextField+extensions.swift */,
 				723337252BDE80F6006B5BFA /* ErrorResponse.swift */,
@@ -606,6 +609,7 @@
 				723337072BDE540E006B5BFA /* DetailViewController.swift in Sources */,
 				7233372E2BDE85DE006B5BFA /* BelongsToCollectionModel.swift in Sources */,
 				7247F72A2BDCBC9800724B15 /* ViewController.swift in Sources */,
+				723337632BDE9515006B5BFA /* UIViewController+extensions.swift in Sources */,
 				7247F7402BDCD35100724B15 /* UITextField+extensions.swift in Sources */,
 				723337242BDE7B88006B5BFA /* MovieUseCaseImpl.swift in Sources */,
 				723336FE2BDE1783006B5BFA /* DescCollectionViewCell.swift in Sources */,
