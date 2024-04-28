@@ -35,6 +35,8 @@ class HomeViewController: BaseViewController {
         return collectionView
     }()
     
+    private var viewModel: DummyMovielistVM<[MovieModel]> = MovieListViewModelImpl()
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,7 +47,9 @@ class HomeViewController: BaseViewController {
         setupConstraints()
         collectionView.delegate = self
         collectionView.dataSource = self
-        collectionView.reloadData()
+        viewModel.delegate = self
+        
+        viewModel.firstInitials()
     }
     
 
@@ -83,16 +87,39 @@ class HomeViewController: BaseViewController {
 
 }
 
+extension HomeViewController: MovieListDelegate {
+    func onSuccess() {
+        collectionView.reloadSections(IndexSet(integer: 0))
+    }
+    
+    func onError(error: Error) {
+        showToast(message: error.localizedDescription, font: UIFont.systemFont(ofSize: 14))
+    }
+    
+    func onLoading() {
+        self.showLoading()
+    }
+    
+    func onEndLoading() {
+        self.hideLoading()
+    }
+    
+    
+}
+
 extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 1
+        return viewModel.listMovie?.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell =  collectionView.dequeueReusableCell(withReuseIdentifier: "MovieCell", for: indexPath) as? MovieCollectionViewCell else {
             return collectionView.dequeueReusableCell(withReuseIdentifier: "defaultCell", for: indexPath)
         }
-        cell.forTest()
+        guard let getItem = viewModel.listMovie?[indexPath.item] else {
+            return collectionView.dequeueReusableCell(withReuseIdentifier: "defaultCell", for: indexPath)
+        }
+        cell.setValue(value: getItem)
         return cell
     }
     
