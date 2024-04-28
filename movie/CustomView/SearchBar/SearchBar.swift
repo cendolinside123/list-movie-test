@@ -16,6 +16,7 @@ class SearchBar: UIView {
             string: "Search",
             attributes: [NSAttributedString.Key.foregroundColor: UIColor.black]
         )
+        textView.returnKeyType = UIReturnKeyType.search
         return textView
     }()
     
@@ -86,4 +87,10 @@ class SearchBar: UIView {
         NSLayoutConstraint.activate(constraints)
     }
     
+}
+
+extension SearchBar {
+    func getTextField() ->UITextField {
+        return txtSearch
+    }
 }

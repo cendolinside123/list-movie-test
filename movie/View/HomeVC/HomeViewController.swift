@@ -45,6 +45,7 @@ class HomeViewController: BaseViewController {
         setupConstraints()
         collectionView.delegate = self
         collectionView.dataSource = self
+        searchView.getTextField().delegate = self
         collectionView.reloadData()
     }
     
@@ -81,6 +82,30 @@ class HomeViewController: BaseViewController {
         NSLayoutConstraint.activate(constraints)
     }
 
+}
+
+extension HomeViewController: UIScrollViewDelegate {
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        if scrollView.contentOffset.y <= 0 {
+            
+        } else {
+            if scrollView == collectionView {
+                if (Int(scrollView.contentOffset.y) >= Int(scrollView.contentSize.height - scrollView.frame.size.height)) {
+                    
+                    
+                }
+            }
+        }
+    }
+}
+
+extension HomeViewController: UITextFieldDelegate {
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        if (text == "\n") {
+            textView.resignFirstResponder()
+        }
+        return true
+    }
 }
 
 extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSource {
