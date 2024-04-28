@@ -119,6 +119,7 @@ extension MovieListViewModelImpl {
                 let doAllReq = Observable
                     .zip(listReqGenre)
                     .asSingle()
+                    .observe(on: ConcurrentDispatchQueueScheduler(qos: .background))
                     .map({ (result) -> [GenreModel] in
                         var listGenre: [GenreModel] = []
                         
