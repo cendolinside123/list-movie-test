@@ -32,7 +32,22 @@ class DetailViewController: BaseViewController {
         collectionView.register(CastCollectionViewCell.self, forCellWithReuseIdentifier: "CastDetailCell")
         return collectionView
     }()
-
+    
+    private var idMovie: Int = 0
+    
+    init(idMovie: Int) {
+        self.idMovie = idMovie
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
