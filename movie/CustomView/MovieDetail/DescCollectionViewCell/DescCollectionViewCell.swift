@@ -76,6 +76,11 @@ class DescCollectionViewCell: UICollectionViewCell {
 }
 
 extension DescCollectionViewCell {
+    
+    func setValue(value: MovieDetailModel) {
+        lblDesc.text = value.overview
+    }
+    
     func forTesting() {
         lblDesc.text = DescCollectionViewCell.templateDesc
     }

@@ -43,6 +43,8 @@ class CastCollectionViewCell: UICollectionViewCell {
         return collectionView
     }()
     
+    private var listCast: [CastModel] = []
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -82,16 +84,24 @@ class CastCollectionViewCell: UICollectionViewCell {
     }
 }
 
+extension CastCollectionViewCell {
+    func setValue(value: [CastModel]) {
+        listCast = value
+        collectionView.reloadData()
+    }
+}
+
 extension CastCollectionViewCell: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 2
+        return listCast.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "castItemCell", for: indexPath) as? CastItemCollectionViewCell else {
             return collectionView.dequeueReusableCell(withReuseIdentifier: "defaultCell", for: indexPath)
         }
-        cell.forTesting()
+        let getItem = listCast[indexPath.item]
+        cell.setValue(value: getItem)
         return cell
     }
     

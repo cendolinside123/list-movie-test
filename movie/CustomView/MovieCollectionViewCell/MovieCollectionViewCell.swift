@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 class MovieCollectionViewCell: UICollectionViewCell {
     
@@ -153,6 +154,22 @@ class MovieCollectionViewCell: UICollectionViewCell {
 }
 
 extension MovieCollectionViewCell {
+    
+    func setValue(value: MovieModel) {
+        lblMovieTitle.text = value.title
+        
+        let splitStr = value.releaseDate.split(separator: "-")
+        lblYear.text = "\(splitStr[0])"
+        lblGenre.text = value.genreIDS
+        
+        if let backdropPath = value.backdropPath {
+            let urlImg = "https://image.tmdb.org/t/p/w500/\(backdropPath)"
+            if let url = URL(string: urlImg) {
+                imgMovie.kf.setImage(with: url)
+            }
+        }
+    }
+    
     func forTest() {
         lblMovieTitle.text = "Movie Title 1"
         lblYear.text = "2024"
