@@ -135,13 +135,10 @@ extension HomeViewController: UIScrollViewDelegate {
 }
 
 extension HomeViewController: UITextFieldDelegate {
-    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-        if (text == "\n") {
-            textView.resignFirstResponder()
-            if let keyword = searchView.getTextField().text,
-               keyword != "" {
-                viewModel.fetchMovie(keyWord: keyword, isRefetch: true)
-            }
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        if let keyword = searchView.getTextField().text {
+            viewModel.fetchMovie(keyWord: keyword, isRefetch: true)
         }
         return true
     }
