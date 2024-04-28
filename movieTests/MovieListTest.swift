@@ -71,11 +71,71 @@ class MovieListTest: XCTestCase {
     }
     
     func testFetchNewPage() {
+        let expectation = XCTestExpectation(description: "Delegate receives events")
+        expectation.expectedFulfillmentCount = 1
         
+        let mockClass = MockupClass()
+        mockClass.expectation = expectation
+        
+        mockClass.viewModel.firstInitials()
+        
+        let result = XCTWaiter.wait(for: [expectation], timeout: 5)
+        
+        if result == XCTWaiter.Result.completed {
+            XCTAssert(mockClass.listDatalog.count == 1, "Delegate should receive one events")
+            XCTAssertNotNil(mockClass.listDatalog[0], "value should not nil")
+            XCTAssert((mockClass.listDatalog[0]?.count ?? 0) > 0, "value should bigger than zero")
+            
+            let secondExpectation = XCTestExpectation(description: "Delegate receives new events")
+            mockClass.expectation = secondExpectation
+            mockClass.viewModel.fetchMovie(isReFetch: false)
+            let resultSecond = XCTWaiter.wait(for: [secondExpectation], timeout: 5)
+            if resultSecond == XCTWaiter.Result.completed {
+                XCTAssert(mockClass.listDatalog.count == 2, "Delegate should receive three events")
+                XCTAssertNotNil(mockClass.listDatalog[0], "value should not nil")
+                XCTAssert((mockClass.listDatalog[0]?.count ?? 0) > 0, "value should bigger than zero")
+                XCTAssertNotNil(mockClass.listDatalog[1], "value should not nil")
+                XCTAssert((mockClass.listDatalog[1]?.count ?? 0) > 0, "value should bigger than zero")
+            } else {
+                XCTAssert(false, "req timeout")
+            }
+        } else {
+            XCTAssert(false, "req timeout")
+        }
     }
     
     func testSearchMovie() {
+        let expectation = XCTestExpectation(description: "Delegate receives events")
+        expectation.expectedFulfillmentCount = 1
         
+        let mockClass = MockupClass()
+        mockClass.expectation = expectation
+        
+        mockClass.viewModel.firstInitials()
+        
+        let result = XCTWaiter.wait(for: [expectation], timeout: 5)
+        
+        if result == XCTWaiter.Result.completed {
+            XCTAssert(mockClass.listDatalog.count == 1, "Delegate should receive one events")
+            XCTAssertNotNil(mockClass.listDatalog[0], "value should not nil")
+            XCTAssert((mockClass.listDatalog[0]?.count ?? 0) > 0, "value should bigger than zero")
+            
+            let secondExpectation = XCTestExpectation(description: "Delegate receives new events")
+            mockClass.expectation = secondExpectation
+            mockClass.viewModel.fetchMovie(keyWord: "run", isRefetch: false)
+            let resultSecond = XCTWaiter.wait(for: [secondExpectation], timeout: 5)
+            if resultSecond == XCTWaiter.Result.completed {
+                XCTAssert(mockClass.listDatalog.count == 2, "Delegate should receive three events")
+                XCTAssertNotNil(mockClass.listDatalog[0], "value should not nil")
+                XCTAssert((mockClass.listDatalog[0]?.count ?? 0) > 0, "value should bigger than zero")
+                XCTAssertNotNil(mockClass.listDatalog[1], "value should not nil")
+                XCTAssert((mockClass.listDatalog[1]?.count ?? 0) > 0, "value should bigger than zero")
+            } else {
+                XCTAssert(false, "req timeout")
+            }
+        } else {
+            XCTAssert(false, "req timeout")
+        }
     }
     
 }
