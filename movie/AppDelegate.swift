@@ -21,6 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 // Code only executes when tests are running
                 registerDependInjec()
             } else {
+                registerDependInjec()
                 print("work on unit test mode")
             }
         #else
