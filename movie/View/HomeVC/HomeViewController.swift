@@ -47,9 +47,11 @@ class HomeViewController: BaseViewController {
         setupConstraints()
         collectionView.delegate = self
         collectionView.dataSource = self
+        searchView.getTextField().delegate = self
         viewModel.delegate = self
         
         viewModel.firstInitials()
+        
     }
     
 
@@ -103,8 +105,46 @@ extension HomeViewController: MovieListDelegate {
     func onEndLoading() {
         self.hideLoading()
     }
+}
     
-    
+extension HomeViewController: UIScrollViewDelegate {
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        if scrollView.contentOffset.y <= 0 {
+            
+            if let keyword = searchView.getTextField().text,
+               keyword != "" {
+                viewModel.fetchMovie(keyWord: keyword, isRefetch: true)
+            } else {
+                viewModel.fetchMovie(isReFetch: true)
+            }
+            
+        } else {
+            if scrollView == collectionView {
+                if (Int(scrollView.contentOffset.y) >= Int(scrollView.contentSize.height - scrollView.frame.size.height)) {
+                    
+                    if let keyword = searchView.getTextField().text,
+                       keyword != "" {
+                        viewModel.fetchMovie(keyWord: keyword, isRefetch: false)
+                    } else {
+                        viewModel.fetchMovie(isReFetch: false)
+                    }
+                }
+            }
+        }
+    }
+}
+
+extension HomeViewController: UITextFieldDelegate {
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        if (text == "\n") {
+            textView.resignFirstResponder()
+            if let keyword = searchView.getTextField().text,
+               keyword != "" {
+                viewModel.fetchMovie(keyWord: keyword, isRefetch: true)
+            }
+        }
+        return true
+    }
 }
 
 extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSource {
