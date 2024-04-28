@@ -159,7 +159,11 @@ extension MovieCollectionViewCell {
         lblMovieTitle.text = value.title
         
         let splitStr = value.releaseDate.split(separator: "-")
-        lblYear.text = "\(splitStr[0])"
+        
+        if splitStr.count > 0 {
+            lblYear.text = "\(splitStr[0])"
+        }
+        
         lblGenre.text = value.genreIDS
         
         if let backdropPath = value.backdropPath {
