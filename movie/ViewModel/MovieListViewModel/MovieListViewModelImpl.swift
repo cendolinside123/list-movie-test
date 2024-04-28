@@ -90,6 +90,7 @@ extension MovieListViewModelImpl {
         let useCaseMovieList = self.useCaseMovieList
         let getCurrentPage = self.currentPage
         isOnLoad = true
+        delegate?.onLoading()
         useCaseLanguage
             .doFetchLanguage()
             .catchAndReturn([])
@@ -178,7 +179,7 @@ extension MovieListViewModelImpl {
         }
         self.getPrevTask = .normalLoad
         let currentPage = self.currentPage
-        
+        delegate?.onLoading()
         useCaseMovieList
             .fetchMovie(isAdultAllow: true, page: currentPage)
             .observe(on: ConcurrentDispatchQueueScheduler(qos: .background))
@@ -230,7 +231,7 @@ extension MovieListViewModelImpl {
         }
         self.getPrevTask = .normalLoad
         let currentPage = self.currentPage
-        
+        delegate?.onLoading()
         useCaseMovieList
             .searchMovie(keyWord: keyword, isAdultAllow: true, page: currentPage)
             .observe(on: ConcurrentDispatchQueueScheduler(qos: .background))
