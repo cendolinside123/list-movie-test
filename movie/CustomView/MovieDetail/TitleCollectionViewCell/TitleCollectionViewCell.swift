@@ -15,6 +15,12 @@ class TitleCollectionViewCell: UICollectionViewCell {
         return view
     }()
     
+    private let viewBackground: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor(white: 0, alpha: 0.5)
+        return view
+    }()
+    
     private let stackViewInfo: UIStackView = {
         let stackview = UIStackView()
         stackview.axis = .vertical
@@ -91,6 +97,7 @@ class TitleCollectionViewCell: UICollectionViewCell {
         self.backgroundColor = UIColor(white: 1, alpha: 0.001)
         self.contentView.backgroundColor = UIColor(white: 1, alpha: 0.001)
         self.contentView.addSubview(imgMovie)
+        self.contentView.addSubview(viewBackground)
         self.contentView.addSubview(stackViewInfo)
         stackViewInfo.addArrangedSubview(lblMovieTitle)
         stackViewInfo.addArrangedSubview(lblTime)
@@ -102,6 +109,7 @@ class TitleCollectionViewCell: UICollectionViewCell {
     
     private func setupConstraints() {
         let views: [String: Any] = ["imgMovie": imgMovie,
+                                    "viewBackground": viewBackground,
                                     "stackViewInfo": stackViewInfo]
         
         var constraints: [NSLayoutConstraint] = []
@@ -112,6 +120,13 @@ class TitleCollectionViewCell: UICollectionViewCell {
         
         constraints += NSLayoutConstraint.constraints(withVisualFormat: h_imgMovie, options: .alignAllTop, metrics: nil, views: views)
         constraints += NSLayoutConstraint.constraints(withVisualFormat: v_imgMovie, options: .alignAllLeading, metrics: nil, views: views)
+        
+        viewBackground.translatesAutoresizingMaskIntoConstraints = false
+        let h_viewBackground = "V:|-0-[viewBackground]-0-|"
+        let v_viewBackground = "H:|-0-[viewBackground]-0-|"
+        
+        constraints += NSLayoutConstraint.constraints(withVisualFormat: h_viewBackground, options: .alignAllTop, metrics: nil, views: views)
+        constraints += NSLayoutConstraint.constraints(withVisualFormat: v_viewBackground, options: .alignAllLeading, metrics: nil, views: views)
         
         stackViewInfo.translatesAutoresizingMaskIntoConstraints = false
         let h_stackViewInfo = "H:|-20-[stackViewInfo]-20-|"
@@ -132,9 +147,11 @@ class TitleCollectionViewCell: UICollectionViewCell {
 extension TitleCollectionViewCell {
     
     func setValue(value: MovieDetailModel) {
-        let urlImg = "https://image.tmdb.org/t/p/original/\(value.backdropPath)"
-        if let url = URL(string: urlImg) {
-            imgMovie.kf.setImage(with: url)
+        if let urlBackground = value.backdropPath {
+            let urlImg = "https://image.tmdb.org/t/p/original/\(urlBackground)"
+            if let url = URL(string: urlImg) {
+                imgMovie.kf.setImage(with: url)
+            }
         }
         
         if value.runtime > 0 {
@@ -146,6 +163,7 @@ extension TitleCollectionViewCell {
             }
         }
         lblGenre.text = value.genres
+        lblMovieTitle.text = value.title
     }
     
     func forTesting() {
