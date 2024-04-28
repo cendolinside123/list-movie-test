@@ -9,7 +9,7 @@ import Foundation
 
 struct MovieDetailModel {
     let adult: Bool
-    let backdropPath: String?
+    let backdropPath: String
     let belongsToCollection: BelongsToCollectionModel?
     let budget: Int
     let genres: String

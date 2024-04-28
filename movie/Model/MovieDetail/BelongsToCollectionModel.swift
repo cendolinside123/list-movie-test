@@ -10,7 +10,8 @@ import Foundation
 // MARK: - BelongsToCollectionModel
 struct BelongsToCollectionModel: Codable {
     let id: Int
-    let name, posterPath, backdropPath: String
+    let name, posterPath: String
+    let backdropPath: String?
 
     enum CodingKeys: String, CodingKey {
         case id, name

@@ -11,7 +11,7 @@ import Foundation
 // MARK: - MovieDetailOnlineModel
 struct MovieDetailOnlineModel: Codable {
     let adult: Bool
-    let backdropPath: String?
+    let backdropPath: String
     let belongsToCollection: BelongsToCollectionModel?
     let budget: Int
     let genres: [GenreModel]
