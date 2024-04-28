@@ -48,6 +48,7 @@
 		723337602BDE94AF006B5BFA /* DIConstant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7233375D2BDE94AF006B5BFA /* DIConstant.swift */; };
 		723337612BDE94AF006B5BFA /* DIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7233375E2BDE94AF006B5BFA /* DIService.swift */; };
 		723337632BDE9515006B5BFA /* UIViewController+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 723337622BDE9515006B5BFA /* UIViewController+extensions.swift */; };
+		7233376C2BDEA2BD006B5BFA /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7233376B2BDEA2BD006B5BFA /* Constant.swift */; };
 		7247F7262BDCBC9800724B15 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7247F7252BDCBC9800724B15 /* AppDelegate.swift */; };
 		7247F72A2BDCBC9800724B15 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7247F7292BDCBC9800724B15 /* ViewController.swift */; };
 		7247F72D2BDCBC9800724B15 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7247F72B2BDCBC9800724B15 /* Main.storyboard */; };
@@ -111,6 +112,7 @@
 		7233375D2BDE94AF006B5BFA /* DIConstant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIConstant.swift; sourceTree = "<group>"; };
 		7233375E2BDE94AF006B5BFA /* DIService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIService.swift; sourceTree = "<group>"; };
 		723337622BDE9515006B5BFA /* UIViewController+extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+extensions.swift"; sourceTree = "<group>"; };
+		7233376B2BDEA2BD006B5BFA /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		7247F7222BDCBC9700724B15 /* movie.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = movie.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7247F7252BDCBC9800724B15 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7247F7292BDCBC9800724B15 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -429,6 +431,7 @@
 				7233375B2BDE94AF006B5BFA /* DependencyInjection */,
 				7247F73F2BDCD35100724B15 /* UITextField+extensions.swift */,
 				723337252BDE80F6006B5BFA /* ErrorResponse.swift */,
+				7233376B2BDEA2BD006B5BFA /* Constant.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -620,6 +623,7 @@
 				723337312BDE8647006B5BFA /* CreditResponse.swift in Sources */,
 				723337332BDE8660006B5BFA /* CastModel.swift in Sources */,
 				723337472BDE9144006B5BFA /* GenreUseCase.swift in Sources */,
+				7233376C2BDEA2BD006B5BFA /* Constant.swift in Sources */,
 				723337262BDE80F6006B5BFA /* ErrorResponse.swift in Sources */,
 				723337012BDE2D18006B5BFA /* CastCollectionViewCell.swift in Sources */,
 				723337382BDE895C006B5BFA /* CastUseCaseImpl.swift in Sources */,
