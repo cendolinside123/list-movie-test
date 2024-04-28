@@ -36,7 +36,7 @@ struct MovieModel: Codable, Hashable {
         case voteCount = "vote_count"
     }
     
-    static func == (lhs: MobileModel, rhs: MobileModel) -> Bool {
+    static func == (lhs: MovieModel, rhs: MovieModel) -> Bool {
         return lhs.id == rhs.id
     }
 
