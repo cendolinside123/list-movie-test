@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 class CastItemCollectionViewCell: UICollectionViewCell {
     
@@ -18,7 +19,7 @@ class CastItemCollectionViewCell: UICollectionViewCell {
         return stackview
     }()
     
-    private let imgMovie: UIImageView = {
+    private let imgCast: UIImageView = {
         let view = UIImageView()
         view.backgroundColor = UIColor(red: 0.77, green: 0.77, blue: 0.77, alpha: 1.00)
         return view
@@ -56,7 +57,7 @@ class CastItemCollectionViewCell: UICollectionViewCell {
         self.backgroundColor = UIColor(white: 1, alpha: 0.001)
         self.contentView.backgroundColor = UIColor(white: 1, alpha: 0.001)
         self.contentView.addSubview(stackViewCore)
-        stackViewCore.addArrangedSubview(imgMovie)
+        stackViewCore.addArrangedSubview(imgCast)
         stackViewCore.addArrangedSubview(lblName)
     }
     
@@ -72,21 +73,33 @@ class CastItemCollectionViewCell: UICollectionViewCell {
         constraints += NSLayoutConstraint.constraints(withVisualFormat: v_stackViewCore, options: .alignAllLeading, metrics: nil, views: views)
         constraints += NSLayoutConstraint.constraints(withVisualFormat: h_stackViewCore, options: .alignAllTop, metrics: nil, views: views)
         
-        imgMovie.translatesAutoresizingMaskIntoConstraints = false
-        constraints += [NSLayoutConstraint(item: imgMovie, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: CGFloat(CastItemCollectionViewCell.widthDefault))]
+        imgCast.translatesAutoresizingMaskIntoConstraints = false
+        constraints += [NSLayoutConstraint(item: imgCast, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: CGFloat(CastItemCollectionViewCell.widthDefault))]
         
         NSLayoutConstraint.activate(constraints)
     }
     
     private func setupCorner() {
-        imgMovie.layoutIfNeeded()
-        imgMovie.layer.cornerRadius = imgMovie.bounds.height / 2
-        imgMovie.clipsToBounds = true
+        imgCast.layoutIfNeeded()
+        imgCast.layer.cornerRadius = imgCast.bounds.height / 2
+        imgCast.clipsToBounds = true
     }
     
 }
 
 extension CastItemCollectionViewCell {
+    
+    func setValue(value: CastModel) {
+        setupCorner()
+        if let ppUser = value.profilePath {
+            let urlImg = "https://image.tmdb.org/t/p/w500/\(ppUser)"
+            if let url = URL(string: urlImg) {
+                imgCast.kf.setImage(with: url)
+            }
+        }
+        lblName.text = value.originalName
+    }
+    
     func forTesting() {
         setupCorner()
         lblName.text = "Dave Franco"

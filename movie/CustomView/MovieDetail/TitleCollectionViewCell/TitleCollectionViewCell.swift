@@ -122,9 +122,32 @@ class TitleCollectionViewCell: UICollectionViewCell {
         
         NSLayoutConstraint.activate(constraints)
     }
+    
+    private func minutesToHoursAndMinutes(_ minutes: Int) -> (hours: Int , leftMinutes: Int) {
+        return (minutes / 60, (minutes % 60))
+    }
+
 }
 
 extension TitleCollectionViewCell {
+    
+    func setValue(value: MovieDetailModel) {
+        let urlImg = "https://image.tmdb.org/t/p/original/\(value.backdropPath)"
+        if let url = URL(string: urlImg) {
+            imgMovie.kf.setImage(with: url)
+        }
+        
+        if value.runtime > 0 {
+            let getNewRunTime =  self.minutesToHoursAndMinutes(value.runtime)
+            if getNewRunTime.hours > 0 {
+                lblTime.text = "\(getNewRunTime.hours) h \(getNewRunTime.leftMinutes) m"
+            } else {
+                lblTime.text = "\(value.runtime) m"
+            }
+        }
+        lblGenre.text = value.genres
+    }
+    
     func forTesting() {
         lblMovieTitle.text = "Movie Title Here 1"
         lblTime.text = "1 h 29 m"
