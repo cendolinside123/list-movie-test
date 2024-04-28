@@ -17,6 +17,7 @@ class SearchBar: UIView {
             attributes: [NSAttributedString.Key.foregroundColor: UIColor.black]
         )
         textView.returnKeyType = UIReturnKeyType.search
+        textView.textColor = .black
         return textView
     }()
     
