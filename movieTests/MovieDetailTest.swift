@@ -23,9 +23,5 @@ class MovieDetailTest: XCTestCase {
         
     }
     
-    func testLoadCredits() {
-        
-    }
-    
     
 }
