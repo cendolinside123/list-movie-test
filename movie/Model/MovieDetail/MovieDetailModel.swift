@@ -29,5 +29,5 @@ struct MovieDetailModel {
     let video: Bool
     let voteAverage: Double
     let voteCount: Int
-    let overViewSize: CGSize?
+    var overViewSize: CGSize?
 }
