@@ -34,6 +34,7 @@ class DetailViewController: BaseViewController {
     }()
     
     private var idMovie: Int = 0
+    private var viewModel: DummyMovieDetailVM<(MovieDetailModel, [CastModel])> = MovieDetailViewModelImpl()
     
     init(idMovie: Int) {
         self.idMovie = idMovie
@@ -57,7 +58,18 @@ class DetailViewController: BaseViewController {
         addAction()
         collectionView.delegate = self
         collectionView.dataSource = self
+        viewModel.delegate = self
         
+        if idMovie != 0 {
+            viewModel.loadMovieDetail(movieID: idMovie)
+        } else {
+            showToast(message: "error, failed get movie ID", font: UIFont.systemFont(ofSize: 14))
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: { [weak self] in
+                self?.navigationController?.popViewController(animated: true)
+            })
+            
+        }
     }
     
 
@@ -107,29 +119,70 @@ extension DetailViewController {
     }
 }
 
+extension DetailViewController: MovieDetailDelegate {
+    func onSuccess() {
+        self.collectionView.reloadSections(IndexSet(integer: 0))
+    }
+    
+    func onError(error: Error) {
+        self.showToast(message: error.localizedDescription, font: UIFont.systemFont(ofSize: 14))
+    }
+    
+    func onLoading() {
+        showLoading()
+    }
+    
+    func onEndLoading() {
+        hideLoading()
+    }
+    
+    
+}
+
 extension DetailViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 3
+        
+        if let getData = viewModel.movieInformation {
+            if getData.1.count > 0 {
+                return 3
+            } else {
+                return 2
+            }
+        } else {
+            return 0
+        }
+        
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
+        guard let getItem = viewModel.movieInformation else {
+            return collectionView.dequeueReusableCell(withReuseIdentifier: "defaultCell", for: indexPath)
+        }
         
         if indexPath.item == 0 {
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TitleDetailCell", for: indexPath) as? TitleCollectionViewCell else {
                 return collectionView.dequeueReusableCell(withReuseIdentifier: "defaultCell", for: indexPath)
             }
-            cell.forTesting()
+            cell.setValue(value: getItem.0)
             return cell
         } else if indexPath.item == 1 {
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "DescDetailCell", for: indexPath) as? DescCollectionViewCell else {
                 return collectionView.dequeueReusableCell(withReuseIdentifier: "defaultCell", for: indexPath)
             }
-            cell.forTesting()
+            cell.setValue(value: getItem.0)
             return cell
         } else if indexPath.item == 2 {
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CastDetailCell", for: indexPath) as? CastCollectionViewCell else {
                 return collectionView.dequeueReusableCell(withReuseIdentifier: "defaultCell", for: indexPath)
             }
+            
+            if getItem.1.count > 0 {
+                cell.setValue(value: getItem.1)
+            } else {
+                return collectionView.dequeueReusableCell(withReuseIdentifier: "defaultCell", for: indexPath)
+            }
+            
             return cell
         }
         
@@ -142,12 +195,25 @@ extension DetailViewController: UICollectionViewDelegate, UICollectionViewDataSo
 extension DetailViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
+        guard let getItem = viewModel.movieInformation else {
+            return .zero
+        }
+        
         if indexPath.item == 0 {
             return CGSize(width: self.collectionView.bounds.width, height: CGFloat(TitleCollectionViewCell.defaultHeight))
         } else if indexPath.item == 1 {
-            return CGSize(width: self.collectionView.bounds.width, height: CGFloat(DescCollectionViewCell.templateHeight))
+            if let getSize = getItem.0.overViewSize {
+                return CGSize(width: self.collectionView.bounds.width, height: getSize.height)
+            } else {
+                return CGSize(width: self.collectionView.bounds.width, height: CGFloat(DescCollectionViewCell.templateHeight))
+            }
         } else if indexPath.item == 2 {
-            return CGSize(width: self.collectionView.bounds.width, height: CGFloat(180))
+            if getItem.1.count > 0  {
+                return CGSize(width: self.collectionView.bounds.width, height: CGFloat(180))
+            } else {
+                return.zero
+            }
+            
         }
         
         return .zero
