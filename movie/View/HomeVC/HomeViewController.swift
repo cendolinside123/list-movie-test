@@ -161,7 +161,10 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let vc = DetailViewController()
+        guard let getItem = viewModel.listMovie?[indexPath.item] else {
+            return
+        }
+        let vc = DetailViewController(idMovie: getItem.id)
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
