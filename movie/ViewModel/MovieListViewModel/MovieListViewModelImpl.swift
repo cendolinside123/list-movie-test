@@ -42,7 +42,7 @@ class MovieListViewModelImpl: DummyMovielistVM<[MovieModel]> {
                 if isFirstInit {
                     self?.firstInitLoad()
                 } else {
-                    if let keyWord {
+                    if let keyWord, keyWord != "" {
                         self?.doSearchMovie(isRefetch: isRefetch, keyword: keyWord)
                     } else {
                         self?.doFetchMovie(isRefetch: isRefetch)
@@ -195,7 +195,11 @@ extension MovieListViewModelImpl {
             })
             .observe(on: ConcurrentDispatchQueueScheduler(qos: .background))
             .map({ [weak self] (result) -> [MovieModel] in
-                return self?.doFilterDuplicate(newData: result) ?? []
+                if !isRefetch {
+                    return self?.doFilterDuplicate(newData: result) ?? []
+                } else {
+                    return result
+                }
             })
             .subscribe(on: ConcurrentDispatchQueueScheduler(qos: .background))
             .observe(on: MainScheduler.instance)
@@ -229,7 +233,7 @@ extension MovieListViewModelImpl {
         if isRefetch {
             self.currentPage = 1
         }
-        self.getPrevTask = .normalLoad
+        self.getPrevTask = .Search
         let currentPage = self.currentPage
         delegate?.onLoading()
         useCaseMovieList
@@ -247,7 +251,12 @@ extension MovieListViewModelImpl {
             })
             .observe(on: ConcurrentDispatchQueueScheduler(qos: .background))
             .map({ [weak self] (result) -> [MovieModel] in
-                return self?.doFilterDuplicate(newData: result) ?? []
+                if !isRefetch {
+                    return self?.doFilterDuplicate(newData: result) ?? []
+                } else {
+                    return result
+                }
+                
             })
             .subscribe(on: ConcurrentDispatchQueueScheduler(qos: .background))
             .observe(on: MainScheduler.instance)
