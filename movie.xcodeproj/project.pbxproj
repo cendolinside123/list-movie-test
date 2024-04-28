@@ -209,6 +209,7 @@
 		7247F7192BDCBC9700724B15 = {
 			isa = PBXGroup;
 			children = (
+				7233371B2BDE78A8006B5BFA /* Documentation.docc */,
 				7247F7242BDCBC9700724B15 /* movie */,
 				7247F7232BDCBC9700724B15 /* Products */,
 				5662A06AB11E285076F75C17 /* Pods */,
@@ -237,7 +238,6 @@
 				7247F72E2BDCBC9800724B15 /* Assets.xcassets */,
 				7247F7302BDCBC9800724B15 /* LaunchScreen.storyboard */,
 				7247F7332BDCBC9800724B15 /* Info.plist */,
-				7233371B2BDE78A8006B5BFA /* Documentation.docc */,
 			);
 			path = movie;
 			sourceTree = "<group>";
