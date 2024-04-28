@@ -16,6 +16,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         self.window = UIWindow(frame: UIScreen.main.bounds)
         
+        #if DEBUG
+            if ProcessInfo.processInfo.environment["XCTestConfigurationFilePath"] == nil {
+                // Code only executes when tests are running
+                registerDependInjec()
+            } else {
+                print("work on unit test mode")
+            }
+        #else
+            registerDependInjec()
+        #endif
         
         let vc = UINavigationController(rootViewController: HomeViewController())
         vc.navigationBar.isHidden = true
@@ -26,6 +36,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
 
+    private func registerDependInjec() {
+        ServiceContainer.register(type: GenreUseCase.self, GenreUseCaseImpl())
+        ServiceContainer.register(type: LanguageUseCase.self, LanguageUseCaseImpl())
+        ServiceContainer.register(type: CastUseCase.self, CastUseCaseImpl())
+        ServiceContainer.register(type: MovieUseCase.self, MovieUseCaseImpl())
+    }
 
 }
 

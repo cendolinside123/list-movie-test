@@ -13,7 +13,10 @@ class MovieDetailTest: XCTestCase {
     
     
     override class func setUp() {
-        
+        ServiceContainer.register(type: GenreUseCase.self, GenreUseCaseImpl())
+        ServiceContainer.register(type: LanguageUseCase.self, LanguageUseCaseImpl())
+        ServiceContainer.register(type: CastUseCase.self, CastUseCaseImpl())
+        ServiceContainer.register(type: MovieUseCase.self, MovieUseCaseImpl())
     }
     
     func testLoadDetailmovie() {
