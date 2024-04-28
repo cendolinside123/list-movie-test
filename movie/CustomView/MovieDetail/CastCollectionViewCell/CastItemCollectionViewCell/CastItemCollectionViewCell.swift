@@ -22,6 +22,7 @@ class CastItemCollectionViewCell: UICollectionViewCell {
     private let imgCast: UIImageView = {
         let view = UIImageView()
         view.backgroundColor = UIColor(red: 0.77, green: 0.77, blue: 0.77, alpha: 1.00)
+        view.contentMode = .scaleAspectFit
         return view
     }()
     
