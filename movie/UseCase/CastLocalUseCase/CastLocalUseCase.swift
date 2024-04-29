@@ -6,3 +6,9 @@
 //
 
 import Foundation
+import CoreData
+import RxSwift
+
+protocol CastLocalUseCase {
+    func doInputCast(movie: Movie, value: [CastModel]) -> Completable
+}
