@@ -19,6 +19,9 @@ class MovieListTest: XCTestCase {
         ServiceContainer.register(type: LanguageUseCase.self, LanguageUseCaseImpl())
         ServiceContainer.register(type: CastUseCase.self, CastUseCaseImpl())
         ServiceContainer.register(type: MovieUseCase.self, MovieUseCaseImpl())
+        ServiceContainer.register(type: MovieLocalUseCase.self, MovieLocalUseCaseImpl())
+        ServiceContainer.register(type: GenreLocalUseCase.self, GenreLocalUseCaseImpl())
+        ServiceContainer.register(type: CastLocalUseCase.self, CastLocalUseCaseImpl())
     }
     
     func testFirstLoad() {
