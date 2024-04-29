@@ -317,7 +317,7 @@ extension MovieListViewModelImpl {
                 
                 var listTask: [Completable] = []
                 
-                for item in listMovie {
+                for item in getDifference {
                     let doTask = localMovieUsecase
                         .inputMovie(value: item)
                         .catch({ _ in
@@ -413,7 +413,7 @@ extension MovieListViewModelImpl {
                 
                 var listTask: [Completable] = []
                 
-                for item in listMovie {
+                for item in getDifference {
                     let doTask = localMovieUsecase
                         .inputMovie(value: item)
                         .catch({ _ in
