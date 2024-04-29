@@ -6,3 +6,14 @@
 //
 
 import Foundation
+import CoreData
+
+extension Genre {
+    func toNormalModel() -> GenreModel? {
+        if let name {
+            return GenreModel(id: Int(self.id), name: name)
+        }
+        
+        return nil
+    }
+}
