@@ -417,7 +417,7 @@
 		7247F7242BDCBC9700724B15 /* movie */ = {
 			isa = PBXGroup;
 			children = (
-				72DF8A752BDEE5B200E338F3 /* ViewModel */,
+				72DF8A752BDEE5B200E338F3 /* Presenter */,
 				7233371F2BDE7AFD006B5BFA /* UseCase */,
 				723337082BDE6507006B5BFA /* Model */,
 				7247F73E2BDCD33400724B15 /* Utils */,
@@ -553,13 +553,13 @@
 			path = MovieLocalUseCase;
 			sourceTree = "<group>";
 		};
-		72DF8A752BDEE5B200E338F3 /* ViewModel */ = {
+		72DF8A752BDEE5B200E338F3 /* Presenter */ = {
 			isa = PBXGroup;
 			children = (
 				72DF8A762BDEE5B200E338F3 /* MovieDetailPresenter */,
 				72DF8A792BDEE5B200E338F3 /* MovieListPresenter */,
 			);
-			path = ViewModel;
+			path = Presenter;
 			sourceTree = "<group>";
 		};
 		72DF8A762BDEE5B200E338F3 /* MovieDetailPresenter */ = {
