@@ -13,6 +13,7 @@ class MovieDetailViewModelImpl: DummyMovieDetailVM<(MovieDetailModel, [CastModel
     private var disposableBag = DisposeBag()
     @Service private var useCaseMovieList: MovieUseCase
     @Service private var useCaseListCast: CastUseCase
+    @Service private var usecaseMovieLocal: MovieLocalUseCase
     
     override func loadMovieDetail(movieID: Int) {
         
@@ -28,7 +29,8 @@ class MovieDetailViewModelImpl: DummyMovieDetailVM<(MovieDetailModel, [CastModel
             .catch({ _ in
                 return Observable.empty()
             })
-        Observable.zip(loadDetail, fetchCast)
+        
+        let fetchOnline = Observable.zip(loadDetail, fetchCast)
             .asSingle()
             .observe(on: ConcurrentDispatchQueueScheduler(qos: .background))
             .map({ (detailResponse, castResponse) -> (MovieDetailModel, [CastModel]) in
@@ -53,7 +55,45 @@ class MovieDetailViewModelImpl: DummyMovieDetailVM<(MovieDetailModel, [CastModel
                 getDetail.overViewSize = CGSize(width: getSize.width, height: totalHeight)
                 
                 return (getDetail, castResponse.cast)
-            }).subscribe(on: ConcurrentDispatchQueueScheduler(qos: .background))
+            })
+        
+        usecaseMovieLocal
+            .getMovie(movieID: movieID)
+            .flatMap({ result -> Single<(MovieDetailModel, [CastModel])> in
+                
+                if let getDetail = result?.toDetail, 
+                    let listCast = (result?.toCast?.allObjects as? [Cast]),
+                    var getDetailModel = getDetail.toNormalModel() {
+                    
+                    for item in listCast {
+                        if let getCast = item.toNormalModel() {
+                            
+                        }
+                    }
+                    
+                    let getSize =  NSString(string: getDetailModel.overview).boundingRect(
+                        with:
+                            CGSize(
+                                width:
+                                    (
+                                        UIScreen.main.bounds.width - (2 * 20)
+                                    ),
+                                height: CGFloat.greatestFiniteMagnitude),
+                        options: [.usesLineFragmentOrigin, .usesFontLeading],
+                        context: nil
+                    )
+                    
+                    
+                    let totalHeight = getSize.height + (2 * 20)
+                    
+//                    getDetail.overViewSize = CGSize(width: getSize.width, height: totalHeight)
+//                    return Single.zip(Single.just(getDetailModel), Single.just(getCast))
+                }
+                
+                
+                return fetchOnline
+            })
+            .subscribe(on: ConcurrentDispatchQueueScheduler(qos: .background))
             .observe(on: MainScheduler.instance)
             .subscribe(onSuccess: { [weak self] detailMovie, listCast in
                 
