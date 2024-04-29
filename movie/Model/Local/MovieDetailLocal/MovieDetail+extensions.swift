@@ -43,7 +43,7 @@ extension MovieDetail {
                 return nil
             }
             
-            return MovieDetailModel(adult: self.adult, backdropPath: backdropPath, belongsToCollection: getBelongsToCollection, budget: Int(self.budget), genres: genres, homepage: homepage, id: Int(self.id), imdbID: imdbID, originCountry: getOriginCountry, originalLanguage: originalLanguage, originalTitle: originalTitle, overview: overview, popularity: self.popularity, posterPath: posterPath, productionCompanies: getProductionCompany, productionCountries: getProdutionCountries, releaseDate: releaseDate, revenue: Int(self.revenue), runtime: Int(self.runtime), spokenLanguages: getSpokenLaguage, status: status, tagline: tagline, title: title, video: self.video, voteAverage: self.voteAverage, voteCount: Int(self.voteCount))
+            return MovieDetailModel(adult: self.adult, backdropPath: backdropPath, belongsToCollection: getBelongsToCollection, budget: Int(self.budget), genres: genres, homepage: homepage, id: Int(self.id), imdbID: imdbID, originCountry: getOriginCountry, originalLanguage: originalLanguage, originalTitle: originalTitle, overview: overview, popularity: self.popularity, posterPath: posterPath, productionCompanies: getProductionCompany, productionCountries: getProdutionCountries, releaseDate: releaseDate, revenue: Int(self.revenue), runtime: Int(self.runtime), spokenLanguages: getSpokenLaguage, status: status, tagline: tagline, title: title, video: self.video, voteAverage: self.voteAverage, voteCount: Int(self.voteCount), overViewSize: nil)
         }
         
         return nil
