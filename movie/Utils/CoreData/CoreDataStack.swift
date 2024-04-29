@@ -15,7 +15,7 @@ class CoreDataStack {
     var isTestOnly: Bool = false
     
     private lazy var storeContainer: NSPersistentContainer = {
-        let container = NSPersistentContainer(name: "Gokemon")
+        let container = NSPersistentContainer(name: "Movie")
         
         if isTestOnly {
             let persistentStoreDescription = NSPersistentStoreDescription()
