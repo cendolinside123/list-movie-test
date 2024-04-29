@@ -19,12 +19,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         #if DEBUG
             if ProcessInfo.processInfo.environment["XCTestConfigurationFilePath"] == nil {
                 // Code only executes when tests are running
+                CoreDataStack.shared.doTestSetup()
                 registerDependInjec()
             } else {
                 registerDependInjec()
                 print("work on unit test mode")
             }
         #else
+            CoreDataStack.shared.doTestSetup()
             registerDependInjec()
         #endif
         
@@ -42,6 +44,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         ServiceContainer.register(type: LanguageUseCase.self, LanguageUseCaseImpl())
         ServiceContainer.register(type: CastUseCase.self, CastUseCaseImpl())
         ServiceContainer.register(type: MovieUseCase.self, MovieUseCaseImpl())
+        ServiceContainer.register(type: MovieLocalUseCase.self, MovieLocalUseCaseImpl())
+        ServiceContainer.register(type: GenreLocalUseCase.self, GenreLocalUseCaseImpl())
     }
 
 }
