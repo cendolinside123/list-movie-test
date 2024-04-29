@@ -1,8 +1,20 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="22225" systemVersion="23B92" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithSwiftData="YES" userDefinedModelVersionIdentifier="">
     <entity name="Cast" representedClassName="Cast" syncable="YES" codeGenerationType="class">
+        <attribute name="adult" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="castID" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="character" optional="YES" attributeType="String"/>
+        <attribute name="creditID" optional="YES" attributeType="String"/>
+        <attribute name="department" optional="YES" attributeType="String"/>
+        <attribute name="gender" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="job" optional="YES" attributeType="String"/>
+        <attribute name="knownForDepartment" optional="YES" attributeType="String"/>
         <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="order" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="originalName" optional="YES" attributeType="String"/>
+        <attribute name="popularity" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="profilePath" optional="YES" attributeType="String"/>
         <relationship name="toitem" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Movie" inverseName="toCast" inverseEntity="Movie"/>
     </entity>
     <entity name="Genre" representedClassName="Genre" syncable="YES" codeGenerationType="class">
@@ -20,6 +32,7 @@
         <attribute name="popularity" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="posterPath" optional="YES" attributeType="String"/>
         <attribute name="releaseDate" optional="YES" attributeType="String"/>
+        <attribute name="title" optional="YES" attributeType="String"/>
         <attribute name="video" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="voteAverage" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="voteCount" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
