@@ -35,8 +35,8 @@ class HomeViewController: BaseViewController {
         return collectionView
     }()
     
-    private var viewModel: DummyMovielistVM<[MovieModel]> = MovieListViewModelImpl()
-    
+    private var viewModel: DummyMovielistPresenter<[MovieModel]> = MovieListPresenterImpl()
+    private var listData: [MovieModel] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -90,7 +90,13 @@ class HomeViewController: BaseViewController {
 }
 
 extension HomeViewController: MovieListDelegate {
-    func onSuccess() {
+    func onSuccess(newData: [MovieModel]) {
+        listData += newData
+        collectionView.reloadSections(IndexSet(integer: 0))
+    }
+    
+    func clearList() {
+        listData = []
         collectionView.reloadSections(IndexSet(integer: 0))
     }
     
@@ -113,9 +119,9 @@ extension HomeViewController: UIScrollViewDelegate {
             
             if let keyword = searchView.getTextField().text,
                keyword != "" {
-                viewModel.fetchMovie(keyWord: keyword, isRefetch: true)
+                viewModel.fetchMovie(keyWord: keyword, isRefetch: true, oldData: listData)
             } else {
-                viewModel.fetchMovie(isReFetch: true)
+                viewModel.fetchMovie(isReFetch: true, oldData: listData)
             }
             
         } else {
@@ -124,9 +130,9 @@ extension HomeViewController: UIScrollViewDelegate {
                     
                     if let keyword = searchView.getTextField().text,
                        keyword != "" {
-                        viewModel.fetchMovie(keyWord: keyword, isRefetch: false)
+                        viewModel.fetchMovie(keyWord: keyword, isRefetch: false, oldData: listData)
                     } else {
-                        viewModel.fetchMovie(isReFetch: false)
+                        viewModel.fetchMovie(isReFetch: false, oldData: listData)
                     }
                 }
             }
@@ -138,7 +144,7 @@ extension HomeViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         if let keyword = searchView.getTextField().text {
-            viewModel.fetchMovie(keyWord: keyword, isRefetch: true)
+            viewModel.fetchMovie(keyWord: keyword, isRefetch: true, oldData: listData)
         }
         return true
     }
@@ -146,24 +152,22 @@ extension HomeViewController: UITextFieldDelegate {
 
 extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return viewModel.listMovie?.count ?? 0
+        return listData.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell =  collectionView.dequeueReusableCell(withReuseIdentifier: "MovieCell", for: indexPath) as? MovieCollectionViewCell else {
             return collectionView.dequeueReusableCell(withReuseIdentifier: "defaultCell", for: indexPath)
         }
-        guard let getItem = viewModel.listMovie?[indexPath.item] else {
-            return collectionView.dequeueReusableCell(withReuseIdentifier: "defaultCell", for: indexPath)
-        }
+        
+        let getItem = listData[indexPath.item]
+        
         cell.setValue(value: getItem)
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let getItem = viewModel.listMovie?[indexPath.item] else {
-            return
-        }
+        let getItem = listData[indexPath.item]
         let vc = DetailViewController(idMovie: getItem.id)
         self.navigationController?.pushViewController(vc, animated: true)
     }

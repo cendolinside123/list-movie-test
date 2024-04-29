@@ -34,7 +34,8 @@ class DetailViewController: BaseViewController {
     }()
     
     private var idMovie: Int = 0
-    private var viewModel: DummyMovieDetailVM<(MovieDetailModel, [CastModel])> = MovieDetailViewModelImpl()
+    private var viewModel: MovieDetailPresenter = MovieDetailPresenterImpl()
+    private var getMovieInfo: (MovieDetailModel, [CastModel])?
     
     init(idMovie: Int) {
         self.idMovie = idMovie
@@ -120,7 +121,8 @@ extension DetailViewController {
 }
 
 extension DetailViewController: MovieDetailDelegate {
-    func onSuccess() {
+    func onSuccess(value: (MovieDetailModel, [CastModel])) {
+        getMovieInfo = value
         self.collectionView.reloadSections(IndexSet(integer: 0))
     }
     
@@ -142,7 +144,7 @@ extension DetailViewController: MovieDetailDelegate {
 extension DetailViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
-        if let getData = viewModel.movieInformation {
+        if let getData = getMovieInfo {
             if getData.1.count > 0 {
                 return 3
             } else {
@@ -156,7 +158,7 @@ extension DetailViewController: UICollectionViewDelegate, UICollectionViewDataSo
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        guard let getItem = viewModel.movieInformation else {
+        guard let getItem = getMovieInfo else {
             return collectionView.dequeueReusableCell(withReuseIdentifier: "defaultCell", for: indexPath)
         }
         
@@ -195,7 +197,7 @@ extension DetailViewController: UICollectionViewDelegate, UICollectionViewDataSo
 extension DetailViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-        guard let getItem = viewModel.movieInformation else {
+        guard let getItem = getMovieInfo else {
             return .zero
         }
         

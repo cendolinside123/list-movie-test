@@ -15,7 +15,8 @@ class MovieListTest: XCTestCase {
         
         var error: Error?
         var listDatalog: [[movie.MovieModel]?] = []
-        var viewModel = MovieListViewModelImpl()
+        var listAllData: [movie.MovieModel] = []
+        var viewModel = MovieListPresenterImpl()
         
         var expectation: XCTestExpectation?
         
@@ -23,8 +24,13 @@ class MovieListTest: XCTestCase {
             self.viewModel.delegate = self
         }
         
-        func onSuccess() {
-            listDatalog.append(viewModel.listMovie)
+        func onSuccess(newData: [MovieModel]) {
+            listAllData += newData
+            listDatalog.append(newData)
+            expectation?.fulfill()
+        }
+        
+        func clearList() {
             expectation?.fulfill()
         }
         
@@ -93,7 +99,7 @@ class MovieListTest: XCTestCase {
             
             let secondExpectation = XCTestExpectation(description: "Delegate receives new events")
             mockClass.expectation = secondExpectation
-            mockClass.viewModel.fetchMovie(isReFetch: false)
+            mockClass.viewModel.fetchMovie(isReFetch: false, oldData: mockClass.listAllData)
             let resultSecond = XCTWaiter.wait(for: [secondExpectation], timeout: 5)
             if resultSecond == XCTWaiter.Result.completed {
                 XCTAssert(mockClass.listDatalog.count == 2, "Delegate should receive three events")
@@ -127,7 +133,7 @@ class MovieListTest: XCTestCase {
             
             let secondExpectation = XCTestExpectation(description: "Delegate receives new events")
             mockClass.expectation = secondExpectation
-            mockClass.viewModel.fetchMovie(keyWord: "run", isRefetch: false)
+            mockClass.viewModel.fetchMovie(keyWord: "run", isRefetch: false, oldData: mockClass.listAllData)
             let resultSecond = XCTWaiter.wait(for: [secondExpectation], timeout: 5)
             if resultSecond == XCTWaiter.Result.completed {
                 XCTAssert(mockClass.listDatalog.count == 2, "Delegate should receive three events")

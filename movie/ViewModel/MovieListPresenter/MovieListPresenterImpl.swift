@@ -14,7 +14,7 @@ fileprivate enum PrevTask {
     case Search
 }
 
-class MovieListViewModelImpl: DummyMovielistVM<[MovieModel]> {
+class MovieListPresenterImpl: DummyMovielistPresenter<[MovieModel]> {
     private var disposableBag = DisposeBag()
     @Service private var useCaseMovieList: MovieUseCase
     @Service private var useCaseLanguage: LanguageUseCase
@@ -22,7 +22,7 @@ class MovieListViewModelImpl: DummyMovielistVM<[MovieModel]> {
     @Service private var useCaseGenreLocal: GenreLocalUseCase
     @Service private var usecaseMovieLocal: MovieLocalUseCase
     
-    private var streamFetch: PublishSubject<(Bool, Bool, String?)> = PublishSubject()
+    private var streamFetch: PublishSubject<([MovieModel], Bool, Bool, String?)> = PublishSubject()
     
     private var isRefetch: Bool = false
     private var isOnLoad: Bool = false
@@ -33,21 +33,21 @@ class MovieListViewModelImpl: DummyMovielistVM<[MovieModel]> {
         super.init()
         streamFetch
             .debounce(.microseconds(500), scheduler: MainScheduler.instance)
-            .filter({ [weak self] _, _, _ in
+            .filter({ [weak self] _, _, _, _ in
                 if self?.isOnLoad != false {
                     return false
                 } else {
                     return true
                 }
             })
-            .subscribe(onNext: { [weak self] (isFirstInit, isRefetch, keyWord) in
+            .subscribe(onNext: { [weak self] (oldListMovie, isFirstInit, isRefetch, keyWord) in
                 if isFirstInit {
                     self?.firstInitLoad()
                 } else {
                     if let keyWord, keyWord != "" {
-                        self?.doSearchMovie(isRefetch: isRefetch, keyword: keyWord)
+                        self?.doSearchMovie(isRefetch: isRefetch, keyword: keyWord, oldData: oldListMovie)
                     } else {
-                        self?.doFetchMovie(isRefetch: isRefetch)
+                        self?.doFetchMovie(isRefetch: isRefetch, oldData: oldListMovie)
                     }
                 }
             }).disposed(by: disposableBag)
@@ -59,10 +59,10 @@ class MovieListViewModelImpl: DummyMovielistVM<[MovieModel]> {
     override func firstInitials() {
         currentPage = 1
         getPrevTask = .normalLoad
-        streamFetch.onNext((true, false, nil))
+        streamFetch.onNext(([], true, false, nil))
     }
     
-    override func fetchMovie(isReFetch: Bool) {
+    override func fetchMovie(isReFetch: Bool, oldData: [MovieModel]) {
         
         var getReFetch = isReFetch
         
@@ -70,10 +70,10 @@ class MovieListViewModelImpl: DummyMovielistVM<[MovieModel]> {
             getReFetch = true
         }
         
-        streamFetch.onNext((false, getReFetch, nil))
+        streamFetch.onNext((oldData, false, getReFetch, nil))
     }
     
-    override func fetchMovie(keyWord: String, isRefetch: Bool) {
+    override func fetchMovie(keyWord: String, isRefetch: Bool, oldData: [MovieModel]) {
         
         var getReFetch = isRefetch
         
@@ -81,11 +81,11 @@ class MovieListViewModelImpl: DummyMovielistVM<[MovieModel]> {
             getReFetch = true
         }
         
-        streamFetch.onNext((false, getReFetch, keyWord))
+        streamFetch.onNext((oldData, false, getReFetch, keyWord))
     }
 }
 
-extension MovieListViewModelImpl {
+extension MovieListPresenterImpl {
     private func firstInitLoad() {
         let useCaseLanguage = self.useCaseLanguage
         let useCaseGenre = self.useCaseGenre
@@ -232,7 +232,7 @@ extension MovieListViewModelImpl {
                 
                 var listTask: [Completable] = []
                 
-                for item in listMovie {
+                for item in getDifference {
                     let doTask = localMovieUsecase
                         .inputMovie(value: item)
                         .catch({ _ in
@@ -251,24 +251,18 @@ extension MovieListViewModelImpl {
             .subscribe(onSuccess: { [weak self] result in
                 self?.currentPage += 1
                 self?.delegate?.onEndLoading()
-                if self?.listMovie == nil || self?.currentPage == 1 {
-                    self?.listMovie = result
-                } else {
-                    self?.listMovie! += result
-                }
-                self?.delegate?.onSuccess()
+                self?.delegate?.onSuccess(newData: result)
                 self?.isOnLoad = false
             }, onFailure: { [weak self] error in
                 self?.delegate?.onEndLoading()
                 self?.delegate?.onError(error: error)
                 if cacheMovie.count > 0 {
-                    self?.listMovie = cacheMovie
-                    self?.delegate?.onSuccess()
+                    self?.delegate?.onSuccess(newData: cacheMovie)
                 }
             }).disposed(by: disposableBag)
     }
     
-    private func doFetchMovie(isRefetch: Bool) {
+    private func doFetchMovie(isRefetch: Bool, oldData: [MovieModel]) {
         let useCaseMovieList = self.useCaseMovieList
         let localMovieUsecase = self.usecaseMovieLocal
         
@@ -334,7 +328,7 @@ extension MovieListViewModelImpl {
             .observe(on: ConcurrentDispatchQueueScheduler(qos: .background))
             .map({ [weak self] (result) -> [MovieModel] in
                 if !isRefetch {
-                    return self?.doFilterDuplicate(newData: result) ?? []
+                    return self?.doFilterDuplicate(newData: result, oldData: oldData) ?? []
                 } else {
                     return result
                 }
@@ -345,16 +339,9 @@ extension MovieListViewModelImpl {
                 self?.currentPage += 1
                 self?.delegate?.onEndLoading()
                 if isRefetch {
-                    self?.listMovie = result
-                } else {
-                    if self?.listMovie == nil {
-                        self?.listMovie = result
-                    } else {
-                        self?.listMovie! += result
-                    }
+                    self?.delegate?.clearList()
                 }
-                
-                self?.delegate?.onSuccess()
+                self?.delegate?.onSuccess(newData: result)
                 self?.isOnLoad = false
             }, onFailure: { [weak self] error in
                 self?.delegate?.onEndLoading()
@@ -363,7 +350,7 @@ extension MovieListViewModelImpl {
         
     }
     
-    private func doSearchMovie(isRefetch: Bool, keyword: String) {
+    private func doSearchMovie(isRefetch: Bool, keyword: String, oldData: [MovieModel]) {
         let useCaseMovieList = self.useCaseMovieList
         let localMovieUsecase = self.usecaseMovieLocal
         
@@ -430,7 +417,7 @@ extension MovieListViewModelImpl {
             .observe(on: ConcurrentDispatchQueueScheduler(qos: .background))
             .map({ [weak self] (result) -> [MovieModel] in
                 if !isRefetch {
-                    return self?.doFilterDuplicate(newData: result) ?? []
+                    return self?.doFilterDuplicate(newData: result, oldData: oldData) ?? []
                 } else {
                     return result
                 }
@@ -442,16 +429,9 @@ extension MovieListViewModelImpl {
                 self?.currentPage += 1
                 self?.delegate?.onEndLoading()
                 if isRefetch {
-                    self?.listMovie = result
-                } else {
-                    if self?.listMovie == nil {
-                        self?.listMovie = result
-                    } else {
-                        self?.listMovie! += result
-                    }
+                    self?.delegate?.clearList()
                 }
-                
-                self?.delegate?.onSuccess()
+                self?.delegate?.onSuccess(newData: result)
                 self?.isOnLoad = false
             }, onFailure: { [weak self] error in
                 self?.delegate?.onEndLoading()
@@ -460,11 +440,11 @@ extension MovieListViewModelImpl {
         
     }
     
-    private func doFilterDuplicate(newData: [MovieModel]) -> [MovieModel] {
+    private func doFilterDuplicate(newData: [MovieModel], oldData: [MovieModel]) -> [MovieModel] {
         
-        let oldData = Set(self.listMovie ?? [])
+        let getOldData = Set(oldData)
         let getNewData = Set(newData)
-        let difference = getNewData.subtracting(oldData)
+        let difference = getNewData.subtracting(getOldData)
         
         return Array(difference)
     }

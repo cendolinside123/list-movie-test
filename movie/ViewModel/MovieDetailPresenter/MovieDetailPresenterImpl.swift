@@ -8,15 +8,19 @@
 import Foundation
 import RxSwift
 
-class MovieDetailViewModelImpl: DummyMovieDetailVM<(MovieDetailModel, [CastModel])> {
+class MovieDetailPresenterImpl {
     
     private var disposableBag = DisposeBag()
+    weak var delegate: MovieDetailDelegate?
     @Service private var useCaseMovieList: MovieUseCase
     @Service private var useCaseListCast: CastUseCase
     @Service private var usecaseMovieLocal: MovieLocalUseCase
     @Service private var useCaseCastLocal: CastLocalUseCase
     
-    override func loadMovieDetail(movieID: Int) {
+}
+
+extension MovieDetailPresenterImpl: MovieDetailPresenter {
+    func loadMovieDetail(movieID: Int) {
         
         delegate?.onLoading()
         let castUsecaseLocal = self.useCaseCastLocal
@@ -131,13 +135,11 @@ class MovieDetailViewModelImpl: DummyMovieDetailVM<(MovieDetailModel, [CastModel
             .subscribe(onSuccess: { [weak self] detailMovie, listCast in
                 
                 self?.delegate?.onEndLoading()
-                self?.movieInformation = (detailMovie, listCast)
-                self?.delegate?.onSuccess()
+                self?.delegate?.onSuccess(value: (detailMovie, listCast))
                 
             }, onFailure: { [weak self] error in
                 self?.delegate?.onEndLoading()
                 self?.delegate?.onError(error: error)
             }).disposed(by: disposableBag)
     }
-    
 }
