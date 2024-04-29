@@ -44,6 +44,8 @@ class MovieListTest: XCTestCase {
     
     
     override class func setUp() {
+        CoreDataStack.shared.isTestOnly = true
+        CoreDataStack.shared.doTestSetup()
         ServiceContainer.register(type: GenreUseCase.self, GenreUseCaseImpl())
         ServiceContainer.register(type: LanguageUseCase.self, LanguageUseCaseImpl())
         ServiceContainer.register(type: CastUseCase.self, CastUseCaseImpl())
