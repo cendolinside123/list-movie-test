@@ -23,7 +23,7 @@ API key dan API read access token dapa dilihat pada project setting
 
 - proses konfigurasi saat app pertama kali masuk (img: fist configure.png)
 ![Image 1](Resources/fist configure.png)
-<img src="Resources/fist configure.png" alt="J" width="200"/>
+<img src="Resources/first configure.png" alt="J" width="200"/>
 
 - proses fetch/refetch halaman (img: fetch data.png)
 ![Image 2](Resources/fetch data.png)
