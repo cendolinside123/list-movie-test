@@ -14,8 +14,8 @@ class MovieListTest: XCTestCase {
     class MockupClass: MovieListDelegate {
         
         var error: Error?
-        var listDatalog: [[movie.MovieModel]?] = []
-        var listAllData: [movie.MovieModel] = []
+        var listDatalog: [[movie.MovieEntity]?] = []
+        var listAllData: [movie.MovieEntity] = []
         var viewModel = MovieListPresenterImpl()
         
         var expectation: XCTestExpectation?
@@ -24,7 +24,7 @@ class MovieListTest: XCTestCase {
             self.viewModel.delegate = self
         }
         
-        func onSuccess(newData: [MovieModel]) {
+        func onSuccess(newData: [MovieEntity]) {
             listAllData += newData
             listDatalog.append(newData)
             expectation?.fulfill()
@@ -99,7 +99,7 @@ class MovieListTest: XCTestCase {
             
             let secondExpectation = XCTestExpectation(description: "Delegate receives new events")
             mockClass.expectation = secondExpectation
-            mockClass.viewModel.fetchMovie(isReFetch: false, oldData: mockClass.listAllData)
+            mockClass.viewModel.fetchMovie(isReFetch: false)
             let resultSecond = XCTWaiter.wait(for: [secondExpectation], timeout: 5)
             if resultSecond == XCTWaiter.Result.completed {
                 XCTAssert(mockClass.listDatalog.count == 2, "Delegate should receive three events")
@@ -133,7 +133,7 @@ class MovieListTest: XCTestCase {
             
             let secondExpectation = XCTestExpectation(description: "Delegate receives new events")
             mockClass.expectation = secondExpectation
-            mockClass.viewModel.fetchMovie(keyWord: "run", isRefetch: false, oldData: mockClass.listAllData)
+            mockClass.viewModel.fetchMovie(keyWord: "run", isRefetch: false)
             let resultSecond = XCTWaiter.wait(for: [secondExpectation], timeout: 5)
             if resultSecond == XCTWaiter.Result.completed {
                 XCTAssert(mockClass.listDatalog.count == 2, "Delegate should receive three events")

@@ -9,5 +9,5 @@ import Foundation
 
 
 struct Constant {
-    static var listStoredGenre: [GenreModel] = []
+    static var listStoredGenre: [GenreEntity] = []
 }

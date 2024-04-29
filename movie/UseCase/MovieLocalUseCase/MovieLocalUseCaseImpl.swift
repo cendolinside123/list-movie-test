@@ -16,7 +16,7 @@ struct MovieLocalUseCaseImpl {
 extension MovieLocalUseCaseImpl: MovieLocalUseCase {
     
     
-    func inputMovie(value: MovieModel) -> RxSwift.Completable {
+    func inputMovie(value: MovieEntity) -> RxSwift.Completable {
         return Completable.create(subscribe: { emmiter in
             
             CoreDataStack.shared.doInBackground {
@@ -89,8 +89,8 @@ extension MovieLocalUseCaseImpl: MovieLocalUseCase {
     }
     
     func inputMovieDetail(movie: Movie,
-                          valueDetail: MovieDetailModel,
-                          cast: [CastModel]) -> RxSwift.Completable {
+                          valueDetail: MovieDetailEntity,
+                          cast: [CastEntity]) -> RxSwift.Completable {
         return Completable.create(subscribe: { emmiter in
             
             CoreDataStack.shared.doInBackground {

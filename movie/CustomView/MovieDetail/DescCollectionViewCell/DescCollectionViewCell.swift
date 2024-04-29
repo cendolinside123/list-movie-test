@@ -77,7 +77,7 @@ class DescCollectionViewCell: UICollectionViewCell {
 
 extension DescCollectionViewCell {
     
-    func setValue(value: MovieDetailModel) {
+    func setValue(value: MovieDetailEntity) {
         lblDesc.text = value.overview
     }
     

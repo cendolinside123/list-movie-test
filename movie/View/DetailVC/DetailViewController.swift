@@ -35,7 +35,7 @@ class DetailViewController: BaseViewController {
     
     private var idMovie: Int = 0
     private var viewModel: MovieDetailPresenter = MovieDetailPresenterImpl()
-    private var getMovieInfo: (MovieDetailModel, [CastModel])?
+    private var getMovieInfo: (MovieDetailEntity, [CastEntity])?
     
     init(idMovie: Int) {
         self.idMovie = idMovie
@@ -121,7 +121,7 @@ extension DetailViewController {
 }
 
 extension DetailViewController: MovieDetailDelegate {
-    func onSuccess(value: (MovieDetailModel, [CastModel])) {
+    func onSuccess(value: (MovieDetailEntity, [CastEntity])) {
         getMovieInfo = value
         self.collectionView.reloadSections(IndexSet(integer: 0))
     }

@@ -11,6 +11,6 @@ import RxSwift
 protocol MovieUseCase {
     func searchMovie(keyWord: String, isAdultAllow: Bool, page: Int) -> Single<MovieItemResponse>
     func fetchMovie(isAdultAllow: Bool, page: Int) -> Single<MovieItemResponse>
-    func fetchMovieDetail(movieID: Int) -> Single<MovieDetailOnlineModel>
+    func fetchMovieDetail(movieID: Int) -> Single<MovieDetailOnlineEntity>
     
 }

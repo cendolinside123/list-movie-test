@@ -43,7 +43,7 @@ class CastCollectionViewCell: UICollectionViewCell {
         return collectionView
     }()
     
-    private var listCast: [CastModel] = []
+    private var listCast: [CastEntity] = []
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -85,7 +85,7 @@ class CastCollectionViewCell: UICollectionViewCell {
 }
 
 extension CastCollectionViewCell {
-    func setValue(value: [CastModel]) {
+    func setValue(value: [CastEntity]) {
         listCast = value
         collectionView.reloadData()
     }

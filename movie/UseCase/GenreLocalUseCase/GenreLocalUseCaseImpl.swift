@@ -14,7 +14,7 @@ struct GenreLocalUseCaseImpl {
 }
 
 extension GenreLocalUseCaseImpl: GenreLocalUseCase {
-    func addGenre(value: GenreModel) -> RxSwift.Completable {
+    func addGenre(value: GenreEntity) -> RxSwift.Completable {
         return Completable.create(subscribe: { emmiter in
             
             CoreDataStack.shared.doInBackground {

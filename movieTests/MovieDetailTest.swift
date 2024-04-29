@@ -14,7 +14,7 @@ class MovieDetailTest: XCTestCase {
     class MockupClass: MovieDetailDelegate {
         
         var error: Error?
-        var result: (MovieDetailModel, [CastModel])?
+        var result: (MovieDetailEntity, [CastEntity])?
         var viewModel = MovieDetailPresenterImpl()
         
         var expectation: XCTestExpectation?
@@ -23,7 +23,7 @@ class MovieDetailTest: XCTestCase {
             viewModel.delegate = self
         }
         
-        func onSuccess(value: (MovieDetailModel, [CastModel])) {
+        func onSuccess(value: (MovieDetailEntity, [CastEntity])) {
             self.result = value
             expectation?.fulfill()
         }

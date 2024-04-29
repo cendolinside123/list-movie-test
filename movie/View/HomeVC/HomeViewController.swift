@@ -35,8 +35,8 @@ class HomeViewController: BaseViewController {
         return collectionView
     }()
     
-    private var viewModel: DummyMovielistPresenter<[MovieModel]> = MovieListPresenterImpl()
-    private var listData: [MovieModel] = []
+    private var viewModel: MovieListPresenter = MovieListPresenterImpl()
+    private var listData: [MovieEntity] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -90,8 +90,8 @@ class HomeViewController: BaseViewController {
 }
 
 extension HomeViewController: MovieListDelegate {
-    func onSuccess(newData: [MovieModel]) {
-        listData += newData
+    func onSuccess(newData: [MovieEntity]) {
+        listData = newData
         collectionView.reloadSections(IndexSet(integer: 0))
     }
     
@@ -119,9 +119,9 @@ extension HomeViewController: UIScrollViewDelegate {
             
             if let keyword = searchView.getTextField().text,
                keyword != "" {
-                viewModel.fetchMovie(keyWord: keyword, isRefetch: true, oldData: listData)
+                viewModel.fetchMovie(keyWord: keyword, isRefetch: true)
             } else {
-                viewModel.fetchMovie(isReFetch: true, oldData: listData)
+                viewModel.fetchMovie(isReFetch: true)
             }
             
         } else {
@@ -130,9 +130,9 @@ extension HomeViewController: UIScrollViewDelegate {
                     
                     if let keyword = searchView.getTextField().text,
                        keyword != "" {
-                        viewModel.fetchMovie(keyWord: keyword, isRefetch: false, oldData: listData)
+                        viewModel.fetchMovie(keyWord: keyword, isRefetch: false)
                     } else {
-                        viewModel.fetchMovie(isReFetch: false, oldData: listData)
+                        viewModel.fetchMovie(isReFetch: false)
                     }
                 }
             }
@@ -144,7 +144,7 @@ extension HomeViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         if let keyword = searchView.getTextField().text {
-            viewModel.fetchMovie(keyWord: keyword, isRefetch: true, oldData: listData)
+            viewModel.fetchMovie(keyWord: keyword, isRefetch: true)
         }
         return true
     }

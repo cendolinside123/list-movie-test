@@ -92,7 +92,7 @@ extension MovieUseCaseImpl: MovieUseCase {
         }).retry(3)
     }
     
-    func fetchMovieDetail(movieID: Int) -> RxSwift.Single<MovieDetailOnlineModel> {
+    func fetchMovieDetail(movieID: Int) -> RxSwift.Single<MovieDetailOnlineEntity> {
         return Single.create(subscribe: { emmiter in
             
             if let token = Bundle.main.infoDictionary?["API_READ_ACCESS_TOKEN"] as? String {
@@ -106,7 +106,7 @@ extension MovieUseCaseImpl: MovieUseCase {
                     switch response.result {
                     case .success(let data):
                         do {
-                            let getData = try JSONDecoder().decode(MovieDetailOnlineModel.self, from: data)
+                            let getData = try JSONDecoder().decode(MovieDetailOnlineEntity.self, from: data)
                             emmiter(.success(getData))
                         } catch let error as NSError {
                             emmiter(.failure(error))

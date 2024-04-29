@@ -14,7 +14,7 @@ struct CastLocalUseCaseImpl {
 }
 
 extension CastLocalUseCaseImpl: CastLocalUseCase {
-    func doInputCast(movie: Movie, value: [CastModel]) -> RxSwift.Completable {
+    func doInputCast(movie: Movie, value: [CastEntity]) -> RxSwift.Completable {
         return Completable.create(subscribe: { emmiter in
             
             CoreDataStack.shared.doInBackground {

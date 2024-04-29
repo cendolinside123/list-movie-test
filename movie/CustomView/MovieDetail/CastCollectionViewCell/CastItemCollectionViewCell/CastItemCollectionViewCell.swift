@@ -90,7 +90,7 @@ class CastItemCollectionViewCell: UICollectionViewCell {
 
 extension CastItemCollectionViewCell {
     
-    func setValue(value: CastModel) {
+    func setValue(value: CastEntity) {
         setupCorner()
         if let ppUser = value.profilePath {
             let urlImg = "https://image.tmdb.org/t/p/w500/\(ppUser)"

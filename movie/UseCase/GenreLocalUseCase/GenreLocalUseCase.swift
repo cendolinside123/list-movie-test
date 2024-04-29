@@ -10,6 +10,6 @@ import CoreData
 import RxSwift
 
 protocol GenreLocalUseCase {
-    func addGenre(value: GenreModel) -> Completable
+    func addGenre(value: GenreEntity) -> Completable
     func fetchAllGenre() -> Single<[Genre]>
 }

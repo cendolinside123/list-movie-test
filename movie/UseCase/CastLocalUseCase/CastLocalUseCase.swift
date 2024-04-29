@@ -10,5 +10,5 @@ import CoreData
 import RxSwift
 
 protocol CastLocalUseCase {
-    func doInputCast(movie: Movie, value: [CastModel]) -> Completable
+    func doInputCast(movie: Movie, value: [CastEntity]) -> Completable
 }

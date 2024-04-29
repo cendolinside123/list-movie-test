@@ -155,7 +155,7 @@ class MovieCollectionViewCell: UICollectionViewCell {
 
 extension MovieCollectionViewCell {
     
-    func setValue(value: MovieModel) {
+    func setValue(value: MovieEntity) {
         lblMovieTitle.text = value.title
         
         let splitStr = value.releaseDate.split(separator: "-")
