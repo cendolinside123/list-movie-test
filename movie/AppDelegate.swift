@@ -46,6 +46,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         ServiceContainer.register(type: MovieUseCase.self, MovieUseCaseImpl())
         ServiceContainer.register(type: MovieLocalUseCase.self, MovieLocalUseCaseImpl())
         ServiceContainer.register(type: GenreLocalUseCase.self, GenreLocalUseCaseImpl())
+        ServiceContainer.register(type: CastLocalUseCase.self, CastLocalUseCaseImpl())
     }
 
 }
