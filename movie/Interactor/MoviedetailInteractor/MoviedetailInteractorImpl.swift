@@ -25,17 +25,14 @@ extension MoviedetailInteractorImpl: MoviedetailInteractor {
         
         let loadDetail =  useCaseMovieList
             .fetchMovieDetail(movieID: movieID)
-            .asObservable()
         
         let fetchCast = useCaseListCast
             .fetchMovieCredits(movieID: movieID)
-            .asObservable()
             .catch({ _ in
-                return Observable.empty()
+                return Single.just(CreditResponse(id: 0, cast: [], crew: []))
             })
         
-        let fetchOnline = Observable.zip(loadDetail, fetchCast)
-            .asSingle()
+        let fetchOnline = Single.zip(loadDetail, fetchCast)
             .observe(on: ConcurrentDispatchQueueScheduler(qos: .background))
             .map({ (detailResponse, castResponse) -> (MovieDetailEntity, [CastEntity]) in
                 
@@ -107,7 +104,7 @@ extension MoviedetailInteractorImpl: MoviedetailInteractor {
                                             return Completable.empty()
                                         })
                                         .andThen(Single.just(castResponse.cast))
-                                }).asSingle()
+                                })
                             return Single.zip(Single.just(getDetailModel), getCast)
                         }
                     } else {
