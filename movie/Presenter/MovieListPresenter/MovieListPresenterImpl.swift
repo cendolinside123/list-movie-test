@@ -121,28 +121,25 @@ extension MovieListPresenterImpl {
                         .observe(on: ConcurrentDispatchQueueScheduler(qos: .background))
                         .flatMap({ (result) -> Single<[GenreModel]> in
                             
-                            var listReqGenre: [Observable<GenreResponse>] = []
+                            var listReqGenre: [Single<GenreResponse>] = []
                             
                             for item in result {
                                 
                                 let fetchGenreMovie = useCaseGenre
                                     .fetchListGenreMovie(language: item.iso639_1)
-                                    .asObservable()
                                     .catch({ _ in
-                                        return Observable.empty()
+                                        return Single.just(GenreResponse(genres: []))
                                     })
                                 let fetchGenreTV = useCaseGenre
                                     .fetchListGenreTV(language: item.iso639_1)
-                                    .asObservable()
                                     .catch({ _ in
-                                        return Observable.empty()
+                                        return Single.just(GenreResponse(genres: []))
                                     })
                                 listReqGenre.append(fetchGenreMovie)
                                 listReqGenre.append(fetchGenreTV)
                             }
-                            let doAllReq = Observable
+                            let doAllReq = Single
                                 .zip(listReqGenre)
-                                .asSingle()
                                 .observe(on: ConcurrentDispatchQueueScheduler(qos: .background))
                                 .map({ (result) -> [GenreModel] in
                                     var listGenre: [GenreModel] = []

@@ -28,17 +28,12 @@ extension MovieDetailPresenterImpl: MovieDetailPresenter {
         
         let loadDetail =  useCaseMovieList
             .fetchMovieDetail(movieID: movieID)
-            .asObservable()
         
         let fetchCast = useCaseListCast
             .fetchMovieCredits(movieID: movieID)
-            .asObservable()
-            .catch({ _ in
-                return Observable.empty()
-            })
+            .catchAndReturn(CreditResponse(id: 0, cast: [], crew: []))
         
-        let fetchOnline = Observable.zip(loadDetail, fetchCast)
-            .asSingle()
+        let fetchOnline = Single.zip(loadDetail, fetchCast)
             .observe(on: ConcurrentDispatchQueueScheduler(qos: .background))
             .map({ (detailResponse, castResponse) -> (MovieDetailModel, [CastModel]) in
                 
@@ -110,7 +105,7 @@ extension MovieDetailPresenterImpl: MovieDetailPresenter {
                                             return Completable.empty()
                                         })
                                         .andThen(Single.just(castResponse.cast))
-                                }).asSingle()
+                                })
                             return Single.zip(Single.just(getDetailModel), getCast)
                         }
                     } else {
